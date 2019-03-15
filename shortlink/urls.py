@@ -5,5 +5,4 @@ from . import views
 urlpatterns = [
     path('home/', views.index, name='index'),
     path('url/', views.createUrl, name='createUrl'),
-    path('api/code', views.CodeListCreate.as_view()),
 ]

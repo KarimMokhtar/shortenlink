@@ -4,24 +4,26 @@ import hashlib
 from shortlink.models import Code
 from shortlink.serializers import CodeSerializer
 from rest_framework import generics
+import base64
+from django.http import JsonResponse
 
 
 def index(request):
-    print(request)
-    return render(request, 'shortlink/shortlink.html')
+    return render(request, 'frontend/index.html')
 
 
 def hashCode(longUrl, startIndex=0, endIndex=5):
-    hashed = hashlib.md5(longUrl).digest().encode(
-        'base64').strip().replace('+', '-').replace('/', '_')
-
-    return hashed[startIndex, endIndex+1]
+    hashed = hashlib.sha224(bytes(longUrl, 'utf-8')).hexdigest()
+    return hashed[startIndex: endIndex+1]
 
 
 def recursiveInsert(longUrl, startIndex, endIndex):
     incrementSize = 6
     obj, created = Code.objects.get_or_create(
         code=hashCode(longUrl, startIndex, endIndex))
+    if created:
+        obj.longUrl = longUrl
+        obj.save()
     if (not created) and longUrl != obj.longUrl:
         return recursiveInsert(longUrl, endIndex, endIndex + incrementSize)
     return obj
@@ -29,11 +31,10 @@ def recursiveInsert(longUrl, startIndex, endIndex):
 
 def createUrl(request):
     if request.method == 'GET':
-        code = request.GET.get('q')
-        return HttpResponse(code)
+        return render(request, 'frontend/index.html')
     if request.method == 'POST':
         obj = recursiveInsert(request.POST['longUrl'], 0, 5)
-        return HttpResponse('your new link is'+obj.code)
+        return JsonResponse({"code": obj.code})
 
 
 class CodeListCreate(generics.ListCreateAPIView):
