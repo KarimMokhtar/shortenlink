@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import CopyLink from "./CopyLink";
+import NotFound from "./NotFound";
 class DataProvider extends Component {
     constructor() {
         super();
         this.state = {
             loaded: false,
             newLink: "",
-            link: ""
+            link: "",
+            notFound: false
         };
     }
     updateCurrentLink = e => {
@@ -20,7 +22,10 @@ class DataProvider extends Component {
             body: data
         })
             .then(res => res.json())
-            .then(res => this.setState({ link: window.location.href + "url/?q=" + res.code, newLink: res.code, loaded: true }));
+            .then(res => {
+                if (res.code === "None" || res.code === "time") this.setState({ notFound: true, loaded: true });
+                else this.setState({ notFound: false, link: window.location.href + "url/?q=" + res.code, newLink: res.code, loaded: true });
+            });
     }
     render() {
         return (
@@ -40,7 +45,8 @@ class DataProvider extends Component {
                         </div>
                     </div>
                 </form>
-                <CopyLink link={this.state.link} loaded={this.state.loaded} />
+                {this.state.notFound && <NotFound />}
+                {!this.state.notFound && <CopyLink link={this.state.link} loaded={this.state.loaded} />}
             </div>
         );
     }
