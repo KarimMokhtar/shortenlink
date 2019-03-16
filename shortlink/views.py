@@ -6,6 +6,7 @@ from shortlink.serializers import CodeSerializer
 from rest_framework import generics
 import base64
 from django.http import JsonResponse
+import requests
 
 
 def index(request):
@@ -29,10 +30,25 @@ def recursiveInsert(longUrl, startIndex, endIndex):
     return obj
 
 
+def correctUrl(url, timeout=2):
+    try:
+        req = requests.get(url, timeout=timeout)
+    except:
+        return "timeout"
+    if req.status_code == 404:
+        return False
+    return True
+
+
 def createUrl(request):
-    if request.method == 'GET':
+    if request.method == 'GET':  # redirect to the url if exist
         return render(request, 'frontend/index.html')
     if request.method == 'POST':
+        flag = correctUrl(request.POST['longUrl'], 2)
+        if not flag:
+            return JsonResponse({"code": "None"})
+        if flag == 'timeout':
+            return JsonResponse({"code": "time"})
         obj = recursiveInsert(request.POST['longUrl'], 0, 5)
         return JsonResponse({"code": obj.code})
 

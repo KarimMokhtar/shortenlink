@@ -10,7 +10,6 @@ function copyLinkFun() {
         e.preventDefault();
         var parent = $(this).parent(".toast");
         parent.fadeOut("slow", function() {
-            console.log("sssssssssssddddddddddssssssss", $(this));
             $(this).hide();
         });
     });
@@ -46,7 +45,7 @@ function CopyLink(props) {
                         </div>
                         <div className="toast__content">
                             <p className="toast__type">Success</p>
-                            <p className="toast__message">The link has successfully Copied to clipboard</p>
+                            <p className="toast__message">The link has successfully Copied to clipboard </p>
                         </div>
                         <div className="toast__close">
                             <svg version="1.1" viewBox="0 0 15.642 15.642" enableBackground="new 0 0 15.642 15.642">
