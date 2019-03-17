@@ -1873,7 +1873,7 @@ span.flatpickr-weekday {
 }
 .clipboard {
     position: absolute;
-    margin-top: 90px;
+    margin-top: 9.9em;
     justify-content: center;
 }
 
@@ -2079,4 +2079,20 @@ h1 {
 
 .toast--yellow:before {
     background-color: #ffc007;
+}
+.notFound {
+    font-family: "Titillium Web", sans-serif;
+    font-size: 4.6em;
+    font-weight: 900;
+    margin: 0px;
+    text-transform: uppercase;
+    background: url(../img/text.png);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: cover;
+    background-position: center;
+}
+.oops {
+    margin-top: "-0.25em";
+    color: "aliceblue";
 }

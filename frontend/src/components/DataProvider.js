@@ -24,7 +24,7 @@ class DataProvider extends Component {
             .then(res => res.json())
             .then(res => {
                 if (res.code === "None" || res.code === "time") this.setState({ notFound: true, loaded: true });
-                else this.setState({ notFound: false, link: window.location.href + "url/?q=" + res.code, newLink: res.code, loaded: true });
+                else this.setState({ notFound: false, link: window.location.href + "url/?q=" + res.code, newLink: this.state.newLink, loaded: true });
             });
     }
     render() {
