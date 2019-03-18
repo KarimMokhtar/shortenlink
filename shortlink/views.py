@@ -7,6 +7,7 @@ from rest_framework import generics
 import base64
 from django.http import JsonResponse
 import requests
+from django.http import HttpResponsePermanentRedirect
 
 
 def index(request):
@@ -42,7 +43,11 @@ def correctUrl(url, timeout=2):
 
 def createUrl(request):
     if request.method == 'GET':  # redirect to the url if exist
-        return render(request, 'frontend/index.html')
+        try:
+            obj = Code.objects.get(code=request.GET['q'])
+            return HttpResponsePermanentRedirect(obj.longUrl)
+        except:
+            return render(request, 'frontend/index.html')
     if request.method == 'POST':
         flag = correctUrl(request.POST['longUrl'], 2)
         if not flag:
