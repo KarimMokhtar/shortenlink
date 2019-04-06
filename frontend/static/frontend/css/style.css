@@ -1597,7 +1597,7 @@ span.flatpickr-weekday {
     -ms-flex-align: center;
     align-items: center;
     font-family: "Poppins", sans-serif;
-    background: url("../img/Searchs_002.png");
+    background: url("../img/bk2.jpg");
     background-size: cover;
     background-position: center center;
     padding: 15px;
@@ -1800,7 +1800,7 @@ span.flatpickr-weekday {
 .s002 form .inner-form .input-field.fifth-wrap .btn-search {
     height: 70px;
     width: 100%;
-    background: #b78a62;
+    background: #4e293b;
     white-space: nowrap;
     border-radius: 0.5px;
     font-size: 20px;
@@ -1813,7 +1813,7 @@ span.flatpickr-weekday {
 }
 
 .s002 form .inner-form .input-field.fifth-wrap .btn-search:hover {
-    background: #af7d51;
+    background: #5e4a43;
 }
 
 @media screen and (max-width: 992px) {
@@ -2095,4 +2095,16 @@ h1 {
 .oops {
     margin-top: "-0.25em";
     color: "aliceblue";
+}
+@font-face {
+    font-family: "SEGA LOGO FONT";
+    font-style: normal;
+    font-weight: normal;
+    src: local("SEGA LOGO FONT"), url("SEGA.woff") format("woff");
+}
+
+.headerTitle {
+    font-family: "SEGA LOGO FONT";
+    font-weight: 200;
+    color: #0ccac4;
 }

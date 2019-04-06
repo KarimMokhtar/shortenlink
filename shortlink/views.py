@@ -8,6 +8,7 @@ import base64
 from django.http import JsonResponse
 import requests
 from django.http import HttpResponsePermanentRedirect
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -41,13 +42,13 @@ def correctUrl(url, timeout=2):
     return True
 
 
-def createUrl(request):
+def createUrl(request, str="default"):
     if request.method == 'GET':  # redirect to the url if exist
         try:
-            obj = Code.objects.get(code=request.GET['q'])
+            obj = Code.objects.get(code=str)
             return HttpResponsePermanentRedirect(obj.longUrl)
         except:
-            return render(request, 'frontend/index.html')
+            return redirect(index)
     if request.method == 'POST':
         flag = correctUrl(request.POST['longUrl'], 2)
         if not flag:
@@ -58,6 +59,6 @@ def createUrl(request):
         return JsonResponse({"code": obj.code})
 
 
-class CodeListCreate(generics.ListCreateAPIView):
-    queryset = Code.objects.all()
-    serializer_class = CodeSerializer
+# class CodeListCreate(generics.ListCreateAPIView):
+#     queryset = Code.objects.all()
+#     serializer_class = CodeSerializer

@@ -24,7 +24,10 @@ class DataProvider extends Component {
             .then(res => res.json())
             .then(res => {
                 if (res.code === "None" || res.code === "time") this.setState({ notFound: true, loaded: true });
-                else this.setState({ notFound: false, link: window.location.href + "url/?q=" + res.code, newLink: this.state.newLink, loaded: true });
+                else this.setState({ notFound: false, link: window.location.origin + "/url/" + res.code, newLink: this.state.newLink, loaded: true });
+            })
+            .catch(err => {
+                this.setState({ notFound: true, loaded: true });
             });
     }
     render() {
@@ -32,7 +35,7 @@ class DataProvider extends Component {
             <div className="s002">
                 <form>
                     <fieldset>
-                        <legend>Now you can cut your long link!</legend>
+                        <legend className="headerTitle">Now you can cut your long link!</legend>
                     </fieldset>
                     <div className="inner-form">
                         <div className="input-field first-wrap">
